@@ -1,6 +1,8 @@
 # SongGLM
 
-SongGLM is a lyrics-to-melody generation system that leverages 2D alignment encoding and a multi-task pre-training framework to ensure alignment and harmony between lyrics and melody.
+[SongGLM](https://arxiv.org/abs/2412.18107) is a lyrics-to-melody generation system that leverages 2D alignment encoding and a multi-task pre-training framework to ensure alignment and harmony between lyrics and melody.
+
+<p align="center"><img src="figures/overview.png" width="500"><br/> The overall architecture of our SongGLM framework </p>
 
 ## Requirements
 SongGLM requires following packages.
@@ -33,9 +35,9 @@ You can now run the following code for harmonized N-gram extraction, span sampli
 
 ### 1. Harmonized N-gram Extraction
 
-Harmonized N-gram extraction is primarily used to capture the correspondence between lyric and melody features, with the current considered features including syllable stress in lyrics and melodic peaks or rhythm skeletons in melodies. For each word, the minimal unit is an N=1 n-gram composed of the corresponding notes. All word fragments and their associated note fragments within the range of N=1 to N=12 are extracted to construct an n-gram lexicon. Each n-gram is assigned a composite score consisting of two parts: the t-statistic score of the melodic n-gram itself and the lyric-melody relationship score. The relationship score is derived from the t-statistic scores of the lyric n-grams and the concentration score of the set of lyrics associated with the melody. The n-grams in the lexicon are ranked, and the top 25% with the highest scores are selected as harmonized n-grams, forming the final n-gram lexicon.
+Harmonized N-gram extraction is primarily used to capture the correspondence between lyric and melody features, with the current considered features including syllable stress in lyrics and melodic peaks or rhythm skeletons in melodies. 
 
-Harmonized N-gram extraction is only required for the pre-training data (1000 pieces for test):
+Harmonized N-gram extraction is only required for the pre-training data (1000 pieces):
 ```bash
 sh script/extract_ngrams.sh
 ```
@@ -68,7 +70,7 @@ sh script/pretrain_multitasks.sh
 
 Fine-tune the model in an autoregressive manner on a high-quality lyrics-melody dataset, enabling it to generate melodies from lyrics.
 
-For fine-tuning data (1000 pieces for test):
+For fine-tuning data (1000 pieces):
 ```bash
 sh script/finetune_multitasks_wiki.sh
 ```
@@ -79,8 +81,9 @@ sh script/finetune_multitasks_wiki.sh
 sh script/generate_multitasks_wiki.sh
 ```
 
-### 5. Evaluation
+### 6. Evaluation
 
 ```bash
 sh script/evaluation_multitasks.sh
 ```
+
