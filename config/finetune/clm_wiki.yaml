@@ -1,0 +1,41 @@
+# lightning.pytorch==1.8.3.post1
+task:
+  class_path: LanguageModelingTask
+  init_args:
+    seq_len: 768
+
+data:
+  batch_size: 4
+  dataset_dir: dataset/wiki/ngrams/finetune/N4
+  num_workers: 12
+
+model:
+  lr: 5e-5
+  dataset_dir: dataset/wiki/ngrams/finetune/N4
+
+trainer:
+  max_steps: 200000
+  callbacks:
+    - class_path: LearningRateMonitor
+      init_args:
+        logging_interval: step
+    - class_path: ModelCheckpoint
+      init_args:
+        monitor: train_loss
+        mode: min
+        every_n_train_steps: 500
+        filename: "best_train"
+        save_weights_only: false
+    - class_path: ModelCheckpoint
+      init_args:
+        monitor: val_loss
+        mode: min
+        every_n_train_steps: 500
+        filename: "best_val"
+        save_weights_only: false
+    - class_path: ModelCheckpoint
+      init_args:
+        every_n_train_steps: 4000
+        filename: "checkpoint-{epoch:02d}-{step:07d}"
+        save_weights_only: false
+        save_top_k: -1

@@ -1,0 +1,23 @@
+# lightning.pytorch==2.1.0
+seed_everything: 42
+trainer:
+  accelerator: gpu
+  strategy: ddp
+  devices: [0, 1]
+  precision: 16-mixed
+  max_steps: 500000
+  log_every_n_steps: 1
+  accumulate_grad_batches: 1
+  gradient_clip_val: 1.0
+  callbacks:
+    - class_path: LearningRateMonitor
+      init_args:
+        logging_interval: step
+    - class_path: ModelCheckpoint
+      init_args:
+        every_n_train_steps: 1000
+        monitor: train_loss
+        mode: min
+        filename: "best"
+        save_weights_only: false
+        save_last: true

@@ -1,0 +1,32 @@
+data:
+  dataset_dir: dataset/lyrics2melody_dataset/ngrams/pretrain/N4
+  load_ngram_data: true
+  load_phrase_data: true
+  batch_size: 92
+  num_workers: 8
+
+# tokenizer config
+model:
+  dataset_dir: dataset/lyrics2melody_dataset/ngrams/pretrain/N4
+
+task:
+- class_path: InfillingTask
+  init_args:
+    corruption_rate: 0.15
+    kind: pitch_peak_vowel_ngram
+    seq_len: 768
+- class_path: InfillingTask
+  init_args:
+    corruption_rate: 0.15
+    kind: rhythm_vowel_ngram
+    seq_len: 768
+- class_path: InfillingTask
+  init_args:
+    corruption_rate: 0.5
+    kind: phrase
+    seq_len: 768
+- class_path: InfillingTask
+  init_args:
+    corruption_rate: 0.5
+    kind: single
+    seq_len: 768

@@ -1,0 +1,27 @@
+model:
+  class_path: pretrain.model.Lyrics2MelodyPretrainModel
+  init_args:
+    embedding_dim:
+      bar: 32
+      position: 512
+      duration: 512
+      pitch: 512
+      tempo: 256
+      velocity: 256
+      lyrics: 1024
+      group: 512
+      phrase: 512
+      token_type: 32
+      task_id: 32
+    cutoffs: [400, 1000]
+    use_adaptive_embedding: true
+    model_dim: 1536
+    feedforward_dim: 3072
+    num_layers: 8
+    num_heads: 8
+    dropout: 0.1
+    lr: 2e-4
+    betas: [0.9, 0.98]
+    epsilon: 1e-6
+    weight_decay: 0.01
+    warmup_percent: 0.2

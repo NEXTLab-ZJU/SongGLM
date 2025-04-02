@@ -1,0 +1,26 @@
+# lightning.pytorch==1.8.3.post1
+seed_everything: 42
+trainer:
+  callbacks: CustomWriter
+  logger: false
+  enable_checkpointing: false
+  devices: [0]
+  accelerator: gpu
+  precision: 16-mixed
+  strategy: ddp
+model:
+  class_path: Lyrics2MelodyCompletionModel
+  init_args:
+    dataset_dir: dataset/wiki/ngrams/finetune/N4      # for tokenizer config
+    temperature: 0.9
+    top_k: 10 
+    times_to_predict: 10
+data:
+  dataset_dir: dataset/wiki/ngrams/finetune/N4        # for generation
+  batch_size: 1
+  num_workers: 24
+  empty: true
+task:
+  class_path: GenerationTask
+  init_args:
+    seq_len: 768
