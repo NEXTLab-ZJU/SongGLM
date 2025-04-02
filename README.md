@@ -5,7 +5,7 @@
 <p align="center"><img src="figures/overview.png" width="500"><br/> The overall architecture of our SongGLM framework </p>
 
 ## Requirements
-SongGLM requires following packages.
+SongGLM requires following packages:
 - os
 - re
 - glob
